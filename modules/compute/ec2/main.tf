@@ -41,6 +41,13 @@ resource "aws_security_group" "web_server_firewall" {
   }
 
   ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = [local.cidr_map["all-traffic-cidr"]]
+  }
+
+  ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"

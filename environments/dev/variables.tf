@@ -26,5 +26,8 @@ variable "key_name" {
 }
 
 variable "public_key_location" {}
-
 variable "instance_type" {}
+variable "bucket_name" {}
+variable "bucket_key_path" {}
+variable "region" {}
+variable "dynamodb_table" {}
