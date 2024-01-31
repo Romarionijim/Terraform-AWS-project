@@ -5,3 +5,6 @@ variable "container_name" {}
 variable "dockerhub_image" {}
 variable "alb_root_target_group_arn" {}
 variable "alb_about_route_target_group_arn" {}
+variable "env_name" {}
+variable "cidr_blocks" {}
+variable "vpc_id" {}
