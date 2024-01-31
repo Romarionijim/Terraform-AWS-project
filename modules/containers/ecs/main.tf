@@ -29,7 +29,7 @@ resource "aws_ecs_service" "ecs_service" {
   name            = var.ecs_service_name
   cluster         = aws_ecs_cluster.ecs_cluster_1.id
   task_definition = aws_ecs_task_definition.express_app_container.arn
-  launch_type     = ""
+  launch_type     = "EC2"
   load_balancer {
     target_group_arn = var.alb_root_target_group_arn
     container_name   = var.container_name
