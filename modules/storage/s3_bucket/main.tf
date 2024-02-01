@@ -2,7 +2,7 @@ resource "aws_s3_bucket" "s3_bucket" {
   bucket        = var.bucket_name
   force_destroy = true
   tags = {
-    Name = "${env_name}-Bucket"
+    Name = "${var.env_name}-Bucket"
   }
 }
 

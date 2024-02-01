@@ -40,3 +40,5 @@ variable "vpc_id" {
 variable "instance_type" {
   type = string
 }
+
+variable "install_web_server_shell_script_loaction" {}

@@ -1,4 +1,3 @@
-variable "web_server_firewall" {}
 variable "env_name" {}
 variable "subnet_id" {}
 variable "target_type" {}
@@ -7,3 +6,4 @@ variable "ip_address_type" {}
 variable "vpc_id" {}
 variable "cidr_blocks" {}
 variable "cert_arn" {}
+variable "subnet_2_id" {}

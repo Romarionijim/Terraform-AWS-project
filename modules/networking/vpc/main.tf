@@ -18,6 +18,15 @@ resource "aws_subnet" "public_subnet_1" {
   }
 }
 
+resource "aws_subnet" "public_subnet_2" {
+  cidr_block        = local.cidr_map["public-subnet-2"]
+  vpc_id            = aws_vpc.vpc.id
+  availability_zone = var.availability_zones[1]
+  tags = {
+    Name = "${var.env_name}-public-subnet-2"
+  }
+}
+
 resource "aws_subnet" "private_subnet_1" {
   cidr_block        = local.cidr_map["private-subnet-1"]
   vpc_id            = aws_vpc.vpc.id

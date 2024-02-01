@@ -7,7 +7,7 @@ resource "aws_alb" "app_load_balancer" {
   name               = "${var.env_name}-load-balancer"
   internal           = false
   ip_address_type    = "ipv4"
-  security_groups    = [aws_security_group.alb_sg]
+  security_groups    = [aws_security_group.alb_sg.id]
   subnet_mapping {
     subnet_id = var.subnet_id
   }
@@ -48,7 +48,7 @@ resource "aws_lb_listener" "alb_secure_https_listener" {
 
 resource "aws_lb_target_group" "alb_root_target_group" {
   target_type      = var.target_type
-  name             = "${var.env_name}-root-target-group-"
+  name             = "${var.env_name}-root-target-group"
   protocol         = var.protocol
   port             = 3000
   ip_address_type  = var.ip_address_type
