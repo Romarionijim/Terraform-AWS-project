@@ -29,8 +29,9 @@ module "alb" {
   ip_address_type = var.ip_address_type
   protocol        = var.protocol
   cidr_blocks     = var.cidr_blocks
-  cert_arn        = module.route53_and_ssl_cert.ssl_certificate_arn
   subnet_2_id     = module.vpc.public_subnet_2
+  domain          = var.main_domain_name
+  ec2_instance_id = module.ec2.ec2_instance_id
 }
 
 module "route53_and_ssl_cert" {
@@ -41,21 +42,21 @@ module "route53_and_ssl_cert" {
   lb_dns_name      = module.alb.alb_dns_name
 }
 
-module "ecs" {
-  source                           = "../../modules/containers/ecs"
-  vpc_id                           = module.vpc.vpc_id
-  container_name                   = var.container_name
-  dockerhub_image                  = var.dockerhub_image
-  ecs_cluster_1_name               = var.ecs_cluster_1_name
-  cidr_blocks                      = var.cidr_blocks
-  alb_root_target_group_arn        = module.alb.root_tg_arn
-  alb_about_route_target_group_arn = module.alb.about_route_tg_arn
-  task_name                        = var.task_name
-  env_name                         = var.env_name
-  ecs_service_name                 = var.ecs_service_name
-  web_server_instance              = module.ec2
-  public_subnet_ip                 = module.vpc.public_subnet_id
-}
+# module "ecs" {
+#   source                           = "../../modules/containers/ecs"
+#   vpc_id                           = module.vpc.vpc_id
+#   container_name                   = var.container_name
+#   dockerhub_image                  = var.dockerhub_image
+#   ecs_cluster_1_name               = var.ecs_cluster_1_name
+#   cidr_blocks                      = var.cidr_blocks
+#   alb_root_target_group_arn        = module.alb.root_tg_arn
+#   alb_about_route_target_group_arn = module.alb.about_route_tg_arn
+#   task_name                        = var.task_name
+#   env_name                         = var.env_name
+#   ecs_service_name                 = var.ecs_service_name
+#   web_server_instance              = module.ec2
+#   public_subnet_ip                 = module.vpc.public_subnet_id
+# }
 
 module "s3_bucket" {
   source      = "../../modules/storage/s3_bucket"

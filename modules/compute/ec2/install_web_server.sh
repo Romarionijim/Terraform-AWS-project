@@ -1,8 +1,8 @@
 #!/bin/bash
 sudo yum update -y
-sudo yum install -y httpd
-sudo systemctl start httpd
-sudo amazon-linux-extras install -y docker
-sudo systemctl enable --now docker
-sudo yum install -y ecs-init
-sudo systemctl enable --now ecs
+sudo yum install -y git
+sudo yum install -y npm
+sudo git clone https://github.com/Romarionijim/simple-express-code.git
+cd simple-express-code
+npm ci
+node app.js

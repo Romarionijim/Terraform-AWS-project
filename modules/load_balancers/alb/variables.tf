@@ -5,5 +5,6 @@ variable "protocol" {}
 variable "ip_address_type" {}
 variable "vpc_id" {}
 variable "cidr_blocks" {}
-variable "cert_arn" {}
 variable "subnet_2_id" {}
+variable "domain" {}
+variable "ec2_instance_id" {}
