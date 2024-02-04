@@ -7,4 +7,3 @@ variable "vpc_id" {}
 variable "cidr_blocks" {}
 variable "subnet_2_id" {}
 variable "domain" {}
-variable "ec2_instance_id" {}

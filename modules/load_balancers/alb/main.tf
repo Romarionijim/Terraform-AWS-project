@@ -153,23 +153,23 @@ resource "aws_alb_listener_rule" "rule_3" {
   }
 }
 
-resource "aws_lb_target_group_attachment" "attachment_1" {
-  target_group_arn = aws_lb_target_group.alb_root_target_group.arn
-  target_id        = var.ec2_instance_id
-  port             = 3000
-}
+# resource "aws_lb_target_group_attachment" "attachment_1" {
+#   target_group_arn = aws_lb_target_group.alb_root_target_group.arn
+#   target_id        = var.ec2_instance_id
+#   port             = 3000
+# }
 
-resource "aws_lb_target_group_attachment" "attachment_2" {
-  target_group_arn = aws_lb_target_group.alb_about_target_group.arn
-  target_id        = var.ec2_instance_id
-  port             = 3000
-}
+# resource "aws_lb_target_group_attachment" "attachment_2" {
+#   target_group_arn = aws_lb_target_group.alb_about_target_group.arn
+#   target_id        = var.ec2_instance_id
+#   port             = 3000
+# }
 
-resource "aws_lb_target_group_attachment" "attachment_3" {
-  target_group_arn = aws_lb_target_group.alb_edit_target_group.arn
-  target_id        = var.ec2_instance_id
-  port             = 3000
-}
+# resource "aws_lb_target_group_attachment" "attachment_3" {
+#   target_group_arn = aws_lb_target_group.alb_edit_target_group.arn
+#   target_id        = var.ec2_instance_id
+#   port             = 3000
+# }
 
 resource "aws_security_group" "alb_sg" {
   description = "alb security group"
@@ -184,6 +184,13 @@ resource "aws_security_group" "alb_sg" {
   ingress {
     from_port   = 443
     to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [local.cidr_map["all-traffic-cidr"]]
+  }
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = [local.cidr_map["all-traffic-cidr"]]
   }

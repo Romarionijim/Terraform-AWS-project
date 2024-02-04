@@ -61,37 +61,36 @@ resource "aws_route_table_association" "rtb_association_1" {
   subnet_id      = aws_subnet.public_subnet_1.id
 }
 
-resource "aws_route_table" "private_route_table" {
-  vpc_id = aws_vpc.vpc.id
-  tags = {
-    Name = "${var.env_name}-private-rtb"
-  }
-}
+# resource "aws_route_table" "private_route_table" {
+#   vpc_id = aws_vpc.vpc.id
+#   tags = {
+#     Name = "${var.env_name}-private-rtb"
+#   }
+# }
 
-resource "aws_nat_gateway" "nat_gateway_subnet_1" {
-  subnet_id     = aws_subnet.private_subnet_1.id
-  allocation_id = aws_eip.elastic_ip_1.id
-  depends_on    = [aws_eip.elastic_ip_1]
-  tags = {
-    Name = "${var.env_name}-nat-gateway"
-  }
-}
+# resource "aws_nat_gateway" "nat_gateway_subnet_1" {
+#   subnet_id     = aws_subnet.private_subnet_1.id
+#   allocation_id = aws_eip.elastic_ip_1.id
+#   depends_on    = [aws_eip.elastic_ip_1]
+#   tags = {
+#     Name = "${var.env_name}-nat-gateway"
+#   }
+# }
 
-//associate the nat gateway with both of the private subnets
-resource "aws_route" "nat_gateway_association_1" {
-  route_table_id         = aws_route_table.private_route_table.id
-  destination_cidr_block = local.cidr_map["all-traffic-cidr"]
-  nat_gateway_id         = aws_nat_gateway.nat_gateway_subnet_1.id
-}
+# resource "aws_route" "nat_gateway_association_1" {
+#   route_table_id         = aws_route_table.private_route_table.id
+#   destination_cidr_block = local.cidr_map["all-traffic-cidr"]
+#   nat_gateway_id         = aws_nat_gateway.nat_gateway_subnet_1.id
+# }
 
-resource "aws_route_table_association" "private_rtb_association" {
-  route_table_id = aws_route_table.private_route_table.id
-  subnet_id      = aws_subnet.private_subnet_1.id
-}
+# resource "aws_route_table_association" "private_rtb_association" {
+#   route_table_id = aws_route_table.private_route_table.id
+#   subnet_id      = aws_subnet.private_subnet_1.id
+# }
 
-resource "aws_eip" "elastic_ip_1" {
-  depends_on = [aws_internet_gateway.internet_gateway]
-  tags = {
-    Name = "${var.env_name}-elastic-ip"
-  }
-}
+# resource "aws_eip" "elastic_ip_1" {
+#   depends_on = [aws_internet_gateway.internet_gateway]
+#   tags = {
+#     Name = "${var.env_name}-elastic-ip"
+#   }
+# }

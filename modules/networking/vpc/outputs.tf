@@ -2,9 +2,9 @@ output "internet_gateway_id" {
   value = aws_internet_gateway.internet_gateway
 }
 
-output "nat_gateway_1_id" {
-  value = aws_nat_gateway.nat_gateway_subnet_1
-}
+# output "nat_gateway_1_id" {
+#   value = aws_nat_gateway.nat_gateway_subnet_1
+# }
 
 output "public_subnet_id" {
   value = aws_subnet.public_subnet_1.id

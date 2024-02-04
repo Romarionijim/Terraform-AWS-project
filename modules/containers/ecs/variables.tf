@@ -10,3 +10,5 @@ variable "cidr_blocks" {}
 variable "vpc_id" {}
 variable "public_subnet_ip" {}
 variable "web_server_instance" {}
+variable "launch_type" {}
+variable "edit_route_traget_group_arn" {}

@@ -42,3 +42,4 @@ variable "ecs_cluster_1_name" {}
 variable "task_name" {}
 variable "ecs_service_name" {}
 variable "install_web_server_shell_script_loaction" {}
+variable "launch_type" {}
