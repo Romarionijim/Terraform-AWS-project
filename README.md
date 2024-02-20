@@ -38,7 +38,7 @@ Deploy simple node-express app to AWS ECS using Fargate
 * In each environment directory you a `backend.tf` file
 * In order to initialize the remote backend - cd to the relevant environment that you wanna spin up
 * open the backend.tf file and uncomment the code
-* open terminal and type `terraform init` and enter - this will create the remote backend for you to s3 using dynamodb for locking mechanism
+* open terminal and type `terraform init` and enter - this will create the remote backend for you on s3 to manage terraform state remotely using dynamodb for locking mechanism
 ## Variable values (terraform.tfvars)
 * The actual values that are configured in this project that are stored in the terraform.tfvars file are part of gitignore since they store sensitive actual values.
 * in order for this project to work and spin up the app on ECS using terraform - you need to provide your own AWS actual values based on the variable names that are provided in the variable.tf configurations.
