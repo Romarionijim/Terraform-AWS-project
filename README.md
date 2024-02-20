@@ -48,5 +48,5 @@ Deploy simple node-express app to AWS ECS using Fargate
     * `terraform plan` (you'll see the end result of what is declared in the config and validate that everything is planned accordinly)
     * `terraform apply -auto-approve`
 ## Destroy resources
-* after applying resources and spinning up environments - DON'T forget tod estory all the resources in order no to get billed by running the following:
+* after applying resources and spinning up environments - DON'T forget to destory all the resources in order to not get billed for exceeding the use of certain recourses by running the following command in the terminal:
  * `terraform destroy -auto-approve`
