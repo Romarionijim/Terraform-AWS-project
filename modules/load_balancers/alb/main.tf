@@ -62,73 +62,12 @@ resource "aws_lb_target_group" "alb_root_target_group" {
   }
 }
 
-resource "aws_lb_target_group" "alb_about_target_group" {
-  target_type      = var.target_type
-  name             = "${var.env_name}-about-target-group"
-  protocol         = var.protocol
-  port             = 3000
-  ip_address_type  = var.ip_address_type
-  vpc_id           = var.vpc_id
-  protocol_version = "HTTP1"
-  health_check {
-    enabled             = true
-    protocol            = "HTTP"
-    path                = "/about"
-    healthy_threshold   = 5
-    unhealthy_threshold = 2
-    timeout             = 5
-    interval            = 30
-    matcher             = "200"
-  }
-  tags = {
-    Name = "${var.env_name}-about-route-target-group"
-  }
-}
-
-resource "aws_lb_target_group" "alb_edit_target_group" {
-  target_type      = var.target_type
-  name             = "${var.env_name}-edit-target-group"
-  protocol         = var.protocol
-  port             = 3000
-  ip_address_type  = var.ip_address_type
-  vpc_id           = var.vpc_id
-  protocol_version = "HTTP1"
-  health_check {
-    enabled             = true
-    protocol            = "HTTP"
-    path                = "/edit"
-    healthy_threshold   = 5
-    unhealthy_threshold = 2
-    timeout             = 5
-    interval            = 30
-    matcher             = "200"
-  }
-  tags = {
-    Name = "${var.env_name}-edit-route-target-group"
-  }
-}
-
-resource "aws_alb_listener_rule" "rule_1" {
-  listener_arn = aws_lb_listener.alb_secure_https_listener.arn
-  priority     = 1
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.alb_root_target_group.arn
-  }
-
-  condition {
-    path_pattern {
-      values = ["/"]
-    }
-  }
-}
-
 resource "aws_alb_listener_rule" "rule_2" {
   listener_arn = aws_lb_listener.alb_secure_https_listener.arn
   priority     = 2
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.alb_about_target_group.arn
+    target_group_arn = aws_lb_target_group.alb_root_target_group.arn
   }
 
   condition {
@@ -143,7 +82,7 @@ resource "aws_alb_listener_rule" "rule_3" {
   priority     = 3
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.alb_edit_target_group.arn
+    target_group_arn = aws_lb_target_group.alb_root_target_group.arn
   }
 
   condition {
@@ -152,24 +91,6 @@ resource "aws_alb_listener_rule" "rule_3" {
     }
   }
 }
-
-# resource "aws_lb_target_group_attachment" "attachment_1" {
-#   target_group_arn = aws_lb_target_group.alb_root_target_group.arn
-#   target_id        = var.ec2_instance_id
-#   port             = 3000
-# }
-
-# resource "aws_lb_target_group_attachment" "attachment_2" {
-#   target_group_arn = aws_lb_target_group.alb_about_target_group.arn
-#   target_id        = var.ec2_instance_id
-#   port             = 3000
-# }
-
-# resource "aws_lb_target_group_attachment" "attachment_3" {
-#   target_group_arn = aws_lb_target_group.alb_edit_target_group.arn
-#   target_id        = var.ec2_instance_id
-#   port             = 3000
-# }
 
 resource "aws_security_group" "alb_sg" {
   description = "alb security group"

@@ -1,48 +1,17 @@
-# resource "aws_route53_zone" "domain_hosted_zone" {
-#   name = var.main_domain_name
-#   tags = {
-#     Name = "${var.env_name}-hosted-zone"
-#   }
-# }
+data "aws_route53_zone" "hosted_zone" {
+  name         = var.main_domain_name
+  private_zone = false
+}
 
-# resource "aws_route53_record" "main_domain_record" {
-#   zone_id    = aws_route53_zone.domain_hosted_zone.zone_id
-#   name       = var.main_domain_name
-#   type       = "A"
-#   ttl        = "300"
-#   records    = [var.lb_dns_name]
-#   depends_on = [aws_route53_zone.domain_hosted_zone]
-# }
-
-# resource "aws_route53_record" "subdomain_record" {
-#   zone_id    = aws_route53_zone.domain_hosted_zone.zone_id
-#   name       = var.subdomain_name
-#   type       = "A"
-#   ttl        = "300"
-#   records    = [var.lb_dns_name]
-#   depends_on = [aws_route53_zone.domain_hosted_zone]
-# }
-
-# resource "aws_acm_certificate" "main_domain_ssl_certificate" {
-#   domain_name       = var.main_domain_name
-#   validation_method = "DNS"
-#   tags = {
-#     Name = "${var.env_name}-main-domain"
-#   }
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-#   depends_on = [aws_route53_record.main_domain_record, aws_route53_zone.domain_hosted_zone]
-# }
-
-# resource "aws_acm_certificate" "subdomain_ssl_certificate" {
-#   domain_name       = var.subdomain_name
-#   validation_method = "DNS"
-#   tags = {
-#     Name = "${var.env_name}-subdomain"
-#   }
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-#   depends_on = [aws_route53_record.main_domain_record, aws_route53_zone.domain_hosted_zone]
-# }
+resource "aws_route53_record" "route53_record" {
+  zone_id         = data.aws_route53_zone.hosted_zone.id
+  name            = var.sub_domain_name
+  type            = "A"
+  allow_overwrite = true
+  alias {
+    name                   = var.alb_dns_name
+    zone_id                = var.alb_zone_id
+    evaluate_target_health = true
+  }
+  depends_on = [var.alb]
+}

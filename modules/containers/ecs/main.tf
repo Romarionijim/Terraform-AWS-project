@@ -48,16 +48,16 @@ resource "aws_ecs_service" "ecs_service" {
     container_name   = var.container_name
     container_port   = 3000
   }
-  load_balancer {
-    target_group_arn = var.alb_about_route_target_group_arn
-    container_name   = var.container_name
-    container_port   = 3000
-  }
-  load_balancer {
-    target_group_arn = var.edit_route_traget_group_arn
-    container_name   = var.container_name
-    container_port   = 3000
-  }
+  # load_balancer {
+  #   target_group_arn = var.alb_about_route_target_group_arn
+  #   container_name   = var.container_name
+  #   container_port   = 3000
+  # }
+  # load_balancer {
+  #   target_group_arn = var.edit_route_traget_group_arn
+  #   container_name   = var.container_name
+  #   container_port   = 3000
+  # }
 
   tags = {
     Name = "${var.env_name}-ecs-service"

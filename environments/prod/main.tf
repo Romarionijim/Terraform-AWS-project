@@ -36,27 +36,26 @@ module "alb" {
 module "route53_and_ssl_cert" {
   source           = "../../modules/dns/route53"
   main_domain_name = var.main_domain_name
-  subdomain_name   = var.sub_domain_name
-  env_name         = var.env_name
-  lb_dns_name      = module.alb.alb_dns_name
+  alb              = module.alb.alb
+  alb_zone_id      = module.alb.alb_zone_id
+  sub_domain_name  = var.sub_domain_name
+  alb_dns_name     = module.alb.alb_dns_name
 }
 
 module "ecs" {
-  source                           = "../../modules/containers/ecs"
-  vpc_id                           = module.vpc.vpc_id
-  launch_type                      = var.launch_type
-  container_name                   = var.container_name
-  dockerhub_image                  = var.dockerhub_image
-  ecs_cluster_1_name               = var.ecs_cluster_1_name
-  cidr_blocks                      = var.cidr_blocks
-  alb_root_target_group_arn        = module.alb.root_tg_arn
-  alb_about_route_target_group_arn = module.alb.about_route_tg_arn
-  edit_route_traget_group_arn      = module.alb.edit_route_traget_group_arn
-  task_name                        = var.task_name
-  env_name                         = var.env_name
-  ecs_service_name                 = var.ecs_service_name
-  web_server_instance              = module.ec2
-  public_subnet_ip                 = module.vpc.public_subnet_id
+  source                    = "../../modules/containers/ecs"
+  vpc_id                    = module.vpc.vpc_id
+  launch_type               = var.launch_type
+  container_name            = var.container_name
+  dockerhub_image           = var.dockerhub_image
+  ecs_cluster_1_name        = var.ecs_cluster_1_name
+  cidr_blocks               = var.cidr_blocks
+  alb_root_target_group_arn = module.alb.root_tg_arn
+  task_name           = var.task_name
+  env_name            = var.env_name
+  ecs_service_name    = var.ecs_service_name
+  web_server_instance = module.ec2
+  public_subnet_ip    = module.vpc.public_subnet_id
 }
 
 module "s3_bucket" {
