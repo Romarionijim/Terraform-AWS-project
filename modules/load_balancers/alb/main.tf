@@ -62,6 +62,20 @@ resource "aws_lb_target_group" "alb_root_target_group" {
   }
 }
 
+resource "aws_alb_listener_rule" "rule_1" {
+  listener_arn = aws_lb_listener.alb_secure_https_listener.arn
+  priority     = 1
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.alb_root_target_group.arn
+  }
+  condition {
+    path_pattern {
+      values = ["/"]
+    }
+  }
+}
+
 resource "aws_alb_listener_rule" "rule_2" {
   listener_arn = aws_lb_listener.alb_secure_https_listener.arn
   priority     = 2

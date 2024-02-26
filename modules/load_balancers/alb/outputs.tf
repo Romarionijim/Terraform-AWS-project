@@ -13,11 +13,3 @@ output "alb" {
 output "root_tg_arn" {
   value = aws_lb_target_group.alb_root_target_group.arn
 }
-
-# output "about_route_tg_arn" {
-#   value = aws_lb_target_group.alb_about_target_group.arn
-# }
-
-# output "edit_route_traget_group_arn" {
-#   value = aws_lb_target_group.alb_edit_target_group.arn
-# }
